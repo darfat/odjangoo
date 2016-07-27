@@ -7,15 +7,12 @@ import xmlrpclib
 from django.shortcuts import redirect
 
 
-#user = 'IAMONLYHUMAN'
-#pwd = 'noalarmandnosurprises'
+
+
 user = 'admin'
 pwd = 'admin'
-dbname = 'skp_v4_prov_jabar'
-#dbname ='skp_v4_prov_jabar_live'
+dbname = 'skprdb'
 model = 'res.partner'
-#server_common='http://skp.jabarprov.go.id:5069/xmlrpc/common' #9469
-#server_object='http://skp.jabarprov.go.id:5069/xmlrpc/object' #8071
 server_common='http://localhost:9469/xmlrpc/common'
 server_object='http://localhost:9469/xmlrpc/object'
 
