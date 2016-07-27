@@ -1,0 +1,45 @@
+﻿.math-captcha {
+	border: 0px red solid;
+	width: 250px;
+	padding-bottom: 10px;
+	padding-left: 15px;
+}
+
+.math-captcha img {
+	height: 30px;
+	width: auto;
+}
+
+.math-captcha input {
+	height: 50px;
+	width: 120px;
+	font-size: 40px;
+	margin-left: 5px;
+	line-height: 40px;
+}
+
+.isa_info, .isa_success, .isa_warning, .isa_error {
+margin: 0px 0px;
+padding:0.5px;
+}
+.isa_info {
+    color: #00529B;
+    background-color: #BDE5F8;
+}
+.isa_success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
+.isa_warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+.isa_error {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+.isa_info i, .isa_success i, .isa_warning i, .isa_error i {
+    margin:1px 2px;
+    font-size:2em;
+    vertical-align:middle;
+}

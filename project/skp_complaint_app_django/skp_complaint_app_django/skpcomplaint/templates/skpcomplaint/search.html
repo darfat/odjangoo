@@ -1,0 +1,79 @@
+
+{% include "skpcomplaint/base.html" %}
+
+
+
+{% block content %}
+     <!-- container -->
+    <div id="search">
+      <form action="/skpcomplaint/search/" method="POST" class="form">
+          {% csrf_token %}
+        <div class="form-group form-group-green" >
+							<div class="row">
+								<div class="col-lg-4 col-md-8 col-sm-8">
+									<input class="form-control icon-search" id="text-success" placeholder="Silahkan Input Nama Atau Nip" type="text"  name="key_word" >
+									<button  class="btn btn-green waves-button waves-light waves-effect" type="submit">Search</button>
+							    </div>
+								</div>
+        </div>
+    </form>
+    </div>
+     <!-- Header -->
+    <div class="content-inner">
+			<div class="container">
+                {% if employee_list %}
+                    {% for employee in employee_list %}
+                        <div class="card-wrap">
+                                <!--{% if forloop.counter|divisibleby:2 %}
+                                    <div class="row">
+                                        {% else %}
+                                    </div>
+                                {% endif %}
+                                -->
+                                            <div class="col-lg-4 col-sm-6">
+                                                <div class="card " >
+                                                    <div class="card-main">
+                                                        <div class="card-header card-green-bg">
+                                                            <div class="card-inner-side pull-left">
+                                                                <div class="avatar avatar-sm">
+                                                                    <img src="data:image/png;base64,{{ employee.image_medium }}"  />
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-inner">
+                                                                <span>{{ forloop.counter }}. {{ employee.name }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-inner ">
+                                                            <p>
+                                                                <span>{{ employee.nip }}</span> <br/>
+                                                                <span >{{ employee.job_id.1}}</span>  <br/>
+                                                                <span >{{ employee.company_id.1 }}</span>  <br/>
+                                                            </p>
+                                                        </div>
+                                                        <div class="card-action text-yellow card-yellow-bg ">
+                                                            <ul class="nav nav-list pull-left">
+                                                                <li>
+                                                                    <a href="/skpcomplaint/{{ employee.id }}/"><span class="icon icon-check"></span>&nbsp;PILIH</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                        </div>
+                    {% endfor %}
+                {% else %}
+                <p class="content-sub-heading">Data Tidak Ditemukan............</p>
+                {% endif %}
+
+            </div>
+    </div>
+    <!-- END Header -->
+
+
+
+{% endblock %}
+
+
+

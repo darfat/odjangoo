@@ -1,0 +1,187 @@
+
+{% include "skpcomplaint/base.html" %}
+
+
+{% block content %}
+    {% if employee_list %}
+
+        {% for employee in employee_list %}
+               <div class="content-heading">
+                        <h4> {{ employee.name }}</h4>
+               </div>
+               <div class="card card-green " >
+                    <aside class="card-side card-side-img">
+                         <img src="data:image/png;base64,{{ employee.image_medium }}"  />
+                    </aside>
+                   <div class="card-main ">
+                       <div class="card-inner ">
+                                                            <p>
+                                                                <span>{{ employee.nip }}</span> <br/>
+                                                                <span >{{ employee.job_id.1}}</span>  <br/>
+                                                                <span >{{ employee.company_id.1 }}</span>  <br/>
+                                                            </p>
+                       </div>
+                   </div>
+               </div>
+
+                <div>
+
+                        <hr/>
+                        <div align="center">
+                            <h2 >Data Diri</h2>
+                        </div>
+                        <hr/>
+                    <form id="myForm" class="form" action="/skpcomplaint/{{ employee.id }}/propose/" method="POST" >
+                    	<fieldset>
+                            <div class="form-group">
+							<div class="row">
+								<div class="col-lg-2 col-md-3 col-sm-4">
+									<label class="form-label" for="a-input-complaint-type">Tipe</label>
+								</div>
+								<div class="col-lg-4 col-md-6 col-sm-8">
+									<select class="form-control" name="input_complaint_type" id="input_complaint_type" required="True">
+										<option value="instansi" >Instansi</option>
+										<option value="pns">PNS</option>
+										<option value="masyarakat" >Masyarakat</option>
+									</select>
+								</div>
+							</div>
+						</div>
+                          <div class="form-group">
+							<div class="row">
+								<div class="col-lg-2 col-md-3 col-sm-4">
+									<label class="form-label" for="a-input-id"  >NIP/NIK/NO KTP</label>
+								</div>
+								<div class="col-lg-4 col-md-6 col-sm-8">
+									<input class="form-control" name="input_source_id"  id="input_source_id" type="text" required="True" >
+									<span id="input_source_error" >
+										<div class="isa_error">
+											<i  class="fa fa-times-circle"></i>
+										  	 <span id="input_source_error_msg"></span>
+										</div>
+									</span>
+								</div>
+							</div>
+						</div>
+                         <div class="form-group">
+							<div class="row">
+								<div class="col-lg-2 col-md-3 col-sm-4">
+									<label class="form-label" for="a-input-name">Nama/Nama Instansi</label>
+								</div>
+								<div class="col-lg-4 col-md-6 col-sm-8">
+									<input class="form-control" name="input_source_name" type="text" required="True">
+								</div>
+							</div>
+						</div>
+                        <div class="form-group">
+							<div class="row">
+								<div class="col-lg-2 col-md-3 col-sm-4">
+									<label class="form-label" for="a-input-phone">Telp</label>
+								</div>
+								<div class="col-lg-4 col-md-6 col-sm-8">
+									<input class="form-control" name="input_phone" type="text" required="True">
+								</div>
+							</div>
+						</div>
+                        <div class="form-group">
+							<div class="row">
+								<div class="col-lg-2 col-md-3 col-sm-4">
+									<label class="form-label" for="a-input-notes">Keluhan</label>
+								</div>
+								<div class="col-lg-4 col-md-6 col-sm-8">
+									<textarea class="form-control" name="input_notes" rows="5" required="True"></textarea>
+								</div>
+							</div>
+						</div>
+							<div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-3 col-sm-4">
+
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-8">
+                                        <p id="math-captcha"></p>
+                                    </div>
+                                </div>
+
+							</div>
+                             <div class="form-group"  id="on_submit_btn_div">
+                                 <div class="row">
+                                    <div class="col-lg-2 col-md-3 col-sm-4">
+
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-8" >
+                                        <button class="btn btn-blue waves-button waves-light waves-effect" type="submit">Submit</button>
+                                        <button class="btn waves-button waves-effect" type="button">Cancel</button>
+                                    </div>
+                                  </div>
+
+						    </div>
+                        </fieldset>
+                    </form>
+                </div>
+
+
+        {% endfor %}
+
+    {% else %}
+        <p>No Employee are available.</p>
+    {% endif %}
+	<script type="text/javascript">
+
+	    $(function(){
+	        $('#on_submit_btn_div').hide();
+	        $( "#input_source_error" ).hide();
+	    });
+
+    </script>
+	<script type="text/javascript">
+
+
+			$("#math-captcha").mathCaptcha({
+				imgPath: '/static/skpcomplaint/images/',
+				operation: "random",
+				introText: 'Are you Human?:',
+				successFunction: function() {
+					$('#on_submit_btn_div').show();
+					$('.math-captcha-error').remove();
+				},
+				failFunction: function() {
+					$('#on_submit_btn_div').hide();
+					if ($('.math-captcha-error').length < 1) {
+						$('#math-captcha').append("<p class='math-captcha-error'>Wrong result!</p>");
+					}
+				}
+			});
+	</script>
+	<script type="text/javascript">
+	$( "form" ).submit(function( event ) {
+		console.log("validate....");
+		var len = $("#input_source_id" ).val().length;
+		var type =  $("#input_complaint_type" ).val()
+		if(type=='masyarakat'){
+		  if (  len != 20 ) {
+		  		$( "#input_source_error_msg" ).text("Minimum Harus 20 Digit");
+				$( "#input_source_error" ).show();
+			 event.preventDefault();
+		  }else{
+				$( "#input_source_error" ).show().fadeOut( 1000 );
+		  }
+		}else {
+		  if (  len != 18 ) {
+		  		$( "#input_source_error_msg" ).text("Minimum Harus 18 Digit");
+				$( "#input_source_error" ).show();
+			 event.preventDefault();
+		  }else{
+				$( "#input_source_error" ).show().fadeOut( 1000 );
+		  }
+		}
+		  return true;
+	});
+	</script>
+
+
+{% endblock %}
+
+
+
+

@@ -1,0 +1,22 @@
+{% include "skpcomplaint/base.html" %}
+
+{% block content %}
+    <div id="search">
+    <form action="/skpcomplaint/search/" method="POST" class="form">
+        {% csrf_token %}
+        <div class="form-group form-group-green" >
+							<div class="row">
+								<div class="col-lg-4 col-md-6 col-sm-8">
+									<input class="form-control icon-search" id="text-success" placeholder="Silahkan Input Nama Atau Nip Pegawai Yang Akan Diberi Keluhan" type="text"  name="key_word" >
+									<button  class="btn btn-green waves-button waves-light waves-effect" type="submit">Search</button>
+							    </div>
+								</div>
+        </div>
+    </form>
+    </div>
+     {% if status == 'done' %}
+       <div class="content-heading">
+           <h1> Keluhan Berhasil Di Kirim...</h1>
+       </div>
+    {% endif %}
+{% endblock %}
